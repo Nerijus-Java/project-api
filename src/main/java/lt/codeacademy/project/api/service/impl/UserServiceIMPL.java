@@ -4,10 +4,12 @@ import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.entity.Post;
 import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.service.ServiceInterface.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class UserServiceIMPL implements UserService {
 
     @Override
