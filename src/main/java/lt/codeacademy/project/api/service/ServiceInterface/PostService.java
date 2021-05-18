@@ -10,7 +10,7 @@ public interface PostService {
 
     void addPost(Post post);
 
-    Group getPost(UUID uuid);
+    Post getPost(UUID uuid);
 
     List<Post> getAllPosts();
 

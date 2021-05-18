@@ -11,9 +11,9 @@ public interface UserService {
 
     void addUser(User user);
 
-    Group getUser(UUID uuid);
+    User getUser(UUID uuid);
 
-    List<Post> getAllUsers();
+    List<User> getAllUsers();
 
     void updateUser(User user);
 
