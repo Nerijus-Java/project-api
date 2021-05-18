@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public interface GroupService {
 
-
     void addGroup(Group group);
 
     Group getGroup(UUID uuid);

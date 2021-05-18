@@ -1,6 +1,5 @@
 package lt.codeacademy.project.api.service.ServiceInterface;
 
-import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.entity.Post;
 
 import java.util.List;

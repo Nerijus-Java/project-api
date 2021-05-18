@@ -1,6 +1,5 @@
 package lt.codeacademy.project.api.service.impl;
 
-import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.entity.Post;
 import lt.codeacademy.project.api.repository.PostRepository;
 import lt.codeacademy.project.api.service.ServiceInterface.PostService;
