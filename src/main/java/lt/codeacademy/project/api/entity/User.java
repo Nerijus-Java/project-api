@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -28,4 +29,17 @@ public class User {
     private String username;
 
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "commentIdUser")
+    private Set<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "postsIdUser")
+    private Set<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userIdGroup")
+    private Set<Post> groups;
+
 }

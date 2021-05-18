@@ -21,5 +21,11 @@ public class Comment {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "commentIdPost")
+    private Post post;
 
+    @ManyToOne
+    @JoinColumn(name = "commentIdUser")
+    private User user;
 }

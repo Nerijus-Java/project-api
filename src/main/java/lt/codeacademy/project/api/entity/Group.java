@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -22,4 +23,11 @@ public class Group {
     private String groupName;
 
     private String groupBio;
+
+    @ManyToMany
+    private Set<User> followers;
+
+    @ManyToOne
+    @JoinColumn(name = "userIdGroup")
+    private User user;
 }
