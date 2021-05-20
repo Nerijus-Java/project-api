@@ -27,7 +27,12 @@ public class Group {
     @ManyToMany
     private Set<User> followers;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "postIdGroup")
+    private Set<Post> posts;
+
     @ManyToOne
     @JoinColumn(name = "userIdGroup")
     private User user;
+
 }

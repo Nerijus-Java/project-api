@@ -32,4 +32,8 @@ public class Post {
     @JoinColumn(name = "postsIdUser")
     private User user;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "postIdGroup")
+    private Group group;
+
 }

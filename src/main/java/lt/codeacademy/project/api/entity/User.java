@@ -40,6 +40,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userIdGroup")
-    private Set<Post> groups;
+    private Set<Group> groups;
 
 }
