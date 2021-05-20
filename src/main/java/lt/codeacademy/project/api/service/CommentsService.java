@@ -28,8 +28,8 @@ public class CommentsService {
         return commentsRepository.findAll();
     }
 
-    public void updateComment(Comment comment) {
-        commentsRepository.save(comment);
+    public Comment updateComment(Comment comment) {
+        return commentsRepository.save(comment);
     }
 
     public void removeComment(UUID uuid) {
