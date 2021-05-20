@@ -1,15 +1,14 @@
-package lt.codeacademy.project.api.service.impl;
+package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.Post;
 import lt.codeacademy.project.api.repository.PostRepository;
-import lt.codeacademy.project.api.service.ServiceInterface.PostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PostServiceIMPL implements PostService {
+public class PostServiceIMPL  {
 
     private final PostRepository postRepository;
 
@@ -17,27 +16,22 @@ public class PostServiceIMPL implements PostService {
         this.postRepository = postRepository;
     }
 
-    @Override
     public void addPost(Post post) {
         postRepository.save(post);
     }
 
-    @Override
     public Post getPost(UUID uuid) {
         return postRepository.getById(uuid);
     }
 
-    @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
-    @Override
     public void updatePost(Post post) {
         postRepository.save(post);
     }
 
-    @Override
     public void removePost(UUID uuid) {
         postRepository.deleteById(uuid);
     }

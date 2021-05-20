@@ -1,15 +1,14 @@
-package lt.codeacademy.project.api.service.impl;
+package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.repository.GroupRepository;
-import lt.codeacademy.project.api.service.ServiceInterface.GroupService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class GroupServiceIMPL implements GroupService {
+public class GroupServiceIMPL  {
 
     private final GroupRepository groupRepository;
 
@@ -17,27 +16,22 @@ public class GroupServiceIMPL implements GroupService {
         this.groupRepository = groupRepository;
     }
 
-    @Override
     public void addGroup(Group group) {
         groupRepository.save(group);
     }
 
-    @Override
     public Group getGroup(UUID uuid) {
         return groupRepository.getById(uuid);
     }
 
-    @Override
     public List<Group> getAllGroups() {
         return groupRepository.findAll();
     }
 
-    @Override
     public void updateGroup(Group group) {
         groupRepository.save(group);
     }
 
-    @Override
     public void removeGroup(UUID uuid) {
         groupRepository.deleteById(uuid);
     }
