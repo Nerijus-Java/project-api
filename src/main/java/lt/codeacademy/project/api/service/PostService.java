@@ -28,8 +28,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public void updatePost(Post post) {
-        postRepository.save(post);
+    public Post updatePost(Post post) {
+        return postRepository.save(post);
     }
 
     public void removePost(UUID uuid) {

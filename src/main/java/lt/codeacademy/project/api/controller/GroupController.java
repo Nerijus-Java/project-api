@@ -45,7 +45,7 @@ public class GroupController {
     }
 
     @DeleteMapping(value = EndPoint.BY_UUID)
-    @ApiOperation(value = "Remove Comment", httpMethod = "DELETE")
+    @ApiOperation(value = "Remove Group", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {
         groupService.removeGroup(id);
