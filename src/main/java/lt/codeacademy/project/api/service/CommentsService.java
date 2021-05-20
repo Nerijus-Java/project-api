@@ -1,6 +1,7 @@
 package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.Comment;
+import lt.codeacademy.project.api.exception.CommentNotFoundException;
 import lt.codeacademy.project.api.repository.CommentsRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class CommentsService {
     }
 
     public Comment getComment(UUID uuid) {
-        return commentsRepository.getById(uuid);
+        return commentsRepository.findById(uuid).orElseThrow(() -> new CommentNotFoundException("Comment does not exist"));
     }
 
     public List<Comment> getAllComments() {

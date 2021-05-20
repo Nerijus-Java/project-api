@@ -1,6 +1,7 @@
 package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.Post;
+import lt.codeacademy.project.api.exception.PostNotFoundException;
 import lt.codeacademy.project.api.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class PostService {
     }
 
     public Post getPost(UUID uuid) {
-        return postRepository.getById(uuid);
+        return postRepository.findById(uuid).orElseThrow(()-> new PostNotFoundException("Post dose not exist"));
     }
 
     public List<Post> getAllPosts() {

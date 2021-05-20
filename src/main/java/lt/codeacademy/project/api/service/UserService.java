@@ -1,6 +1,7 @@
 package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.User;
+import lt.codeacademy.project.api.exception.UserNotFoundException;
 import lt.codeacademy.project.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService {
     }
 
     public User getUser(UUID uuid) {
-        return userRepository.getById(uuid);
+        return userRepository.findById(uuid).orElseThrow(() -> new UserNotFoundException("User does not exist"));
     }
 
     public List<User> getAllUsers() {

@@ -1,6 +1,7 @@
 package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.Group;
+import lt.codeacademy.project.api.exception.GroupNotFoundException;
 import lt.codeacademy.project.api.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class GroupService {
     }
 
     public Group getGroup(UUID uuid) {
-        return groupRepository.getById(uuid);
+        return groupRepository.findById(uuid).orElseThrow(() -> new GroupNotFoundException("Group does not exist"));
     }
 
     public List<Group> getAllGroups() {
