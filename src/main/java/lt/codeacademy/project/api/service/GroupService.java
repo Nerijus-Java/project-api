@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class GroupServiceIMPL  {
+public class GroupService {
 
     private final GroupRepository groupRepository;
 
-    public GroupServiceIMPL(GroupRepository groupRepository) {
+    public GroupService(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
     }
 

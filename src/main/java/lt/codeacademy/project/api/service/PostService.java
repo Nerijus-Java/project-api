@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PostServiceIMPL  {
+public class PostService {
 
     private final PostRepository postRepository;
 
-    public PostServiceIMPL(PostRepository postRepository) {
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 

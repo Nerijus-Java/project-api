@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CommentsServiceIMPL  {
+public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
-    public CommentsServiceIMPL(CommentsRepository commentsRepository) {
+    public CommentsService(CommentsRepository commentsRepository) {
         this.commentsRepository = commentsRepository;
     }
 
