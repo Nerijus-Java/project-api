@@ -44,7 +44,7 @@ public class CommentController {
         commentsService.addComment(comment);
     }
 
-    @DeleteMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Comment", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {
