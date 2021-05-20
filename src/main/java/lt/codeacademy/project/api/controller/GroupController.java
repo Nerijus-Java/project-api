@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(EndPoint.API_ROOT_GROUP_CONTROLLER)
-@Api(tags = "Group Controller")
+@Api
 public class GroupController {
 
     private final GroupService groupService;

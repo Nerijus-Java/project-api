@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(EndPoint.API_ROOT_USER_CONTROLLER)
-@Api(tags = "User Controller")
+@Api
 public class UserController {
 
     private final UserService userService;

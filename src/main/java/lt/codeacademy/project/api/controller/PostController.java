@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(EndPoint.API_ROOT_POST_CONTROLLER)
-@Api(tags = "Post Controller")
+@Api
 public class PostController {
 
     private final PostService postService;

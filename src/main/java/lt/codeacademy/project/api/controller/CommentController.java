@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(EndPoint.API_ROOT_COMMENT_CONTROLLER)
-@Api(tags = "Comment Controller")
+@Api
 public class CommentController {
 
     private final CommentsService commentsService;
