@@ -53,7 +53,7 @@ public class CommentController {
 
     @PutMapping
     @ApiOperation(value = "Update Comment", httpMethod = "PUT")
-    public Comment updateProduct(@Valid @RequestBody Comment comment) {
+    public Comment updateComment(@Valid @RequestBody Comment comment) {
         return commentsService.updateComment(comment);
     }
 }

@@ -40,20 +40,20 @@ public class GroupController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Create Group", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createComment(@Valid @RequestBody Group group) {
+    public void createGroup(@Valid @RequestBody Group group) {
         groupService.addGroup(group);
     }
 
     @DeleteMapping(value = EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Group", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {
-        groupService.removeGroup(id);
+    public void deleteGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
+        groupService.removeGroup(uuid);
     }
 
     @PutMapping
     @ApiOperation(value = "Update Group", httpMethod = "PUT")
-    public Group updateProduct(@Valid @RequestBody Group group) {
+    public Group updateGroup(@Valid @RequestBody Group group) {
         return groupService.updateGroup(group);
     }
 }
