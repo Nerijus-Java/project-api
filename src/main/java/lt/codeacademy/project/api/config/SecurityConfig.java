@@ -2,6 +2,7 @@ package lt.codeacademy.project.api.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lt.codeacademy.project.api.security.JwtAuthenticationFilter;
+import lt.codeacademy.project.api.security.JwtAuthorizationFilter;
 import lt.codeacademy.project.api.security.JwtService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService));
+        .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService))
+        .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
     }
 
     @Bean
