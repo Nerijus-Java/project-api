@@ -3,13 +3,16 @@ package lt.codeacademy.project.api.service;
 import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.exception.UserNotFoundException;
 import lt.codeacademy.project.api.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -35,5 +38,10 @@ public class UserService {
 
     public void removeUser(UUID uuid) {
         userRepository.deleteById(uuid);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByUsername(s).orElseThrow(() -> new UserNotFoundException("User dose not exist"));
     }
 }
