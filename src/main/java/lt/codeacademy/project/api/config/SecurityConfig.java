@@ -1,5 +1,8 @@
 package lt.codeacademy.project.api.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lt.codeacademy.project.api.security.JwtAuthenticationFilter;
+import lt.codeacademy.project.api.security.JwtService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +18,16 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {
+    public SecurityConfig(ObjectMapper objectMapper, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
+        this.objectMapper = objectMapper;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -40,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+        .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService));
     }
 
     @Bean
