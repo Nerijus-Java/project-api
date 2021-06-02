@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.entity.Post;
+import lt.codeacademy.project.api.service.GroupService;
 import lt.codeacademy.project.api.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,9 +21,11 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
+    private final GroupService groupService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, GroupService groupService) {
         this.postService = postService;
+        this.groupService = groupService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,10 +40,14 @@ public class PostController {
         return postService.getPost(uuid);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.BY_UUID)
     @ApiOperation(value = "Create Post", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPost(@Valid @RequestBody Post post) {
+    public void createPost(@Valid @RequestBody Post post, @PathVariable(EndPoint.UUID) UUID id) {
+        post.setGroup(groupService.getGroup(id));
+        //TODO SET user to post
+
+        //        post.setUser();
         postService.addPost(post);
     }
 

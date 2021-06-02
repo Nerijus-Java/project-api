@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.entity.Comment;
 import lt.codeacademy.project.api.service.CommentsService;
+import lt.codeacademy.project.api.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,11 @@ import java.util.UUID;
 public class CommentController {
 
     private final CommentsService commentsService;
+    private final PostService postService;
 
-    public CommentController(CommentsService commentsService) {
+    public CommentController(CommentsService commentsService, PostService postService) {
         this.commentsService = commentsService;
+        this.postService = postService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,12 +40,17 @@ public class CommentController {
         return commentsService.getComment(uuid);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.BY_POST_UUID)
     @ApiOperation(value = "Create comment", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createComment(@Valid @RequestBody Comment comment) {
+    public void createComment(@Valid @RequestBody Comment comment, @PathVariable(EndPoint.POST_UUID) UUID id) {
+        //TODO set user to comments
+        comment.setPost(postService.getPost(id));
+//        comment.setUser();
         commentsService.addComment(comment);
     }
+
 
     @DeleteMapping(value = EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Comment", httpMethod = "DELETE")
@@ -50,6 +58,7 @@ public class CommentController {
     public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {
         commentsService.removeComment(id);
     }
+
 
     @PutMapping
     @ApiOperation(value = "Update Comment", httpMethod = "PUT")

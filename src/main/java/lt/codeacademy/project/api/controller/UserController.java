@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.entity.User;
+import lt.codeacademy.project.api.service.RoleService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -20,9 +22,11 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,6 +45,7 @@ public class UserController {
     @ApiOperation(value = "Create User", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@Valid @RequestBody User user) {
+        user.setRoles(Set.of(roleService.findByName("USER")));
         userService.addUser(user);
     }
 

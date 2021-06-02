@@ -41,6 +41,9 @@ public class GroupController {
     @ApiOperation(value = "Create Group", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public void createGroup(@Valid @RequestBody Group group) {
+        //TODO set user to group
+
+        //        group.setUser();
         groupService.addGroup(group);
     }
 
