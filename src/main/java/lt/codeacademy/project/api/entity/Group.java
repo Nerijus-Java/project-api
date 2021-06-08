@@ -31,7 +31,7 @@ public class Group {
     @JoinColumn(name = "postIdGroup")
     private Set<Post> posts;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdGroup")
     private User user;
 

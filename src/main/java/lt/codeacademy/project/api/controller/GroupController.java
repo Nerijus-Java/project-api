@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.GroupDto;
 import lt.codeacademy.project.api.entity.Group;
+import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.service.GroupService;
+import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,32 +23,33 @@ import java.util.UUID;
 public class GroupController {
 
     private final GroupService groupService;
+    private final UserService userService;
+    private final GroupDto groupDto;
 
-    public GroupController(GroupService groupService) {
+    public GroupController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
+        this.userService = userService;
+        this.groupDto = new GroupDto();
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get all groups", httpMethod = "GET")
     public List<GroupDto> GetGroups() {
-        GroupDto groupDto = new GroupDto();
         return groupDto.parseList(groupService.getAllGroups());
     }
 
     @GetMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get Group by UUID", httpMethod = "GET")
-    private Group getGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
-        return groupService.getGroup(uuid);
+    private GroupDto getGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
+        return groupDto.parseObject(groupService.getGroup(uuid));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Create Group", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createGroup(@Valid @RequestBody Group group) {
-        //TODO set user to group
-
-        //        group.setUser();
-        groupService.addGroup(group);
+    public GroupDto createGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal String username) {
+        group.setUser((User) userService.loadUserByUsername(username));
+        return groupDto.parseObject(groupService.addGroup(group));
     }
 
     @DeleteMapping(value = EndPoint.BY_UUID)

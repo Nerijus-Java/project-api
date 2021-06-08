@@ -5,10 +5,8 @@ import lt.codeacademy.project.api.security.JwtAuthenticationFilter;
 import lt.codeacademy.project.api.security.JwtAuthorizationFilter;
 import lt.codeacademy.project.api.security.JwtService;
 import lt.codeacademy.project.api.service.UserService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,17 +20,16 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final ObjectMapper objectMapper;
-    private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
-    private final JwtService jwtService;
-
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**"
     };
+    private final ObjectMapper objectMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final JwtService jwtService;
 
     public SecurityConfig(ObjectMapper objectMapper, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
         this.objectMapper = objectMapper;
@@ -60,8 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService))
-        .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), objectMapper, jwtService))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
     }
 
     @Override

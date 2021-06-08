@@ -17,8 +17,8 @@ public class GroupService {
         this.groupRepository = groupRepository;
     }
 
-    public void addGroup(Group group) {
-        groupRepository.save(group);
+    public Group addGroup(Group group) {
+        return groupRepository.save(group);
     }
 
     public Group getGroup(UUID uuid) {
