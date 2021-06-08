@@ -1,6 +1,8 @@
 INSERT INTO USERS (id, bio, name, password, surname, username)
-VALUES ('acf49189-e872-48b0-949e-63d455f4fd86', 'admin', 'admin', '$2y$10$CZxMaE8mJRUy0pb6SJMINuJhki4DM1acsa/522ijcggpqmVduDnbm', 'admin', 'admin'), /*admin*/
-       ('332f6ba3-6f5a-4e27-8e51-eb9797ae946c', 'user', 'user', '$2y$10$8Zzu12t7/E1fS5wtz7fid.SK19Bun04esMdVZsI0MkUO0w9CjD2uu', 'user', 'user');/*pass*/
+VALUES ('acf49189-e872-48b0-949e-63d455f4fd86', 'admin', 'admin',
+        '$2y$10$CZxMaE8mJRUy0pb6SJMINuJhki4DM1acsa/522ijcggpqmVduDnbm', 'admin', 'admin'), /*admin*/
+       ('332f6ba3-6f5a-4e27-8e51-eb9797ae946c', 'user', 'user',
+        '$2y$10$8Zzu12t7/E1fS5wtz7fid.SK19Bun04esMdVZsI0MkUO0w9CjD2uu', 'user', 'user');/*pass*/
 
 INSERT INTO ROLES (id, name)
 VALUES ('7a580a64-a414-40dc-8861-52aa79ff2227', 'USER'),

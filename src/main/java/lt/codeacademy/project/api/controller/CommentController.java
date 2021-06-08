@@ -47,10 +47,10 @@ public class CommentController {
         return commentDto.parseObject(commentsService.getComment(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.BY_POST_UUID)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.BY_POST_UUID)
     @ApiOperation(value = "Create comment", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createComment(@Valid @RequestBody Comment comment, @PathVariable(EndPoint.POST_UUID) UUID id,@AuthenticationPrincipal String username) {
+    public void createComment(@Valid @RequestBody Comment comment, @PathVariable(EndPoint.POST_UUID) UUID id, @AuthenticationPrincipal String username) {
         comment.setPost(postService.getPost(id));
         comment.setUser((User) userService.loadUserByUsername(username));
         commentsService.addComment(comment);

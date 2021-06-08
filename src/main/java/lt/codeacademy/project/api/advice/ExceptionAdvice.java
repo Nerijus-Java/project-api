@@ -11,25 +11,25 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(CommentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse handlingCommentNotFoundException(CommentNotFoundException e){
-        return new ExceptionResponse(e.getMessage(),HttpStatus.NOT_FOUND);
+    public ExceptionResponse handlingCommentNotFoundException(CommentNotFoundException e) {
+        return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GroupNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse handlingGroupNotFoundException(GroupNotFoundException e){
-        return new ExceptionResponse(e.getMessage(),HttpStatus.NOT_FOUND);
+    public ExceptionResponse handlingGroupNotFoundException(GroupNotFoundException e) {
+        return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PostNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse handlingPostNotFoundException(PostNotFoundException e){
-        return new ExceptionResponse(e.getMessage(),HttpStatus.NOT_FOUND);
+    public ExceptionResponse handlingPostNotFoundException(PostNotFoundException e) {
+        return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse handlingUserNotFoundException(UserNotFoundException e){
-        return new ExceptionResponse(e.getMessage(),HttpStatus.NOT_FOUND);
+    public ExceptionResponse handlingUserNotFoundException(UserNotFoundException e) {
+        return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

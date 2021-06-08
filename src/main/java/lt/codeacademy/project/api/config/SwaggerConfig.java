@@ -2,7 +2,6 @@ package lt.codeacademy.project.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -16,7 +15,7 @@ import java.util.Collections;
 public class SwaggerConfig {
 
     @Bean
-    public Docket api(){
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -25,11 +24,11 @@ public class SwaggerConfig {
                 .apiInfo(getApiInfo());
     }
 
-    public ApiInfo getApiInfo(){
+    public ApiInfo getApiInfo() {
         return new ApiInfo("Project API",
                 "My custom Project API",
-                "1.0","Terms",
-                new Contact("Nerijus Viliusis","www.codeacademy.com","Nerijus@gmail.com"),
+                "1.0", "Terms",
+                new Contact("Nerijus Viliusis", "www.codeacademy.com", "Nerijus@gmail.com"),
                 "Project API License",
                 "Project Api URL",
                 Collections.emptyList());

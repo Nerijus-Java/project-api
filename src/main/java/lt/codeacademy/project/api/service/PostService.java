@@ -22,7 +22,7 @@ public class PostService {
     }
 
     public Post getPost(UUID uuid) {
-        return postRepository.findById(uuid).orElseThrow(()-> new PostNotFoundException("Post dose not exist"));
+        return postRepository.findById(uuid).orElseThrow(() -> new PostNotFoundException("Post dose not exist"));
     }
 
     public List<Post> getAllPosts() {

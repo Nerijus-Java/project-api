@@ -18,11 +18,11 @@ public class GroupDto {
     private String groupBio;
     private String username;
 
-    public List<GroupDto> parseList(List<Group> groups){
+    public List<GroupDto> parseList(List<Group> groups) {
         return groups.stream().map(e -> parseObject(e)).collect(Collectors.toList());
     }
 
-    public GroupDto parseObject(Group group){
-        return new GroupDto(group.getId().toString(),group.getGroupName(),group.getGroupBio(), group.getUser().getUsername());
+    public GroupDto parseObject(Group group) {
+        return new GroupDto(group.getId().toString(), group.getGroupName(), group.getGroupBio(), group.getUser().getUsername());
     }
 }

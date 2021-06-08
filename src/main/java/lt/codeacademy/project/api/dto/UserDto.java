@@ -3,7 +3,6 @@ package lt.codeacademy.project.api.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lt.codeacademy.project.api.entity.Post;
 import lt.codeacademy.project.api.entity.Role;
 import lt.codeacademy.project.api.entity.User;
 
@@ -26,6 +25,6 @@ public class UserDto {
     }
 
     public UserDto parseObject(User user) {
-        return new UserDto(user.getId().toString(),user.getUsername(),user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+        return new UserDto(user.getId().toString(), user.getUsername(), user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
     }
 }

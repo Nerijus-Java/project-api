@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class LoginController {
 
     @PostMapping
-    public LoginDto login(@AuthenticationPrincipal User user){
-        return new LoginDto(user.getUsername(),user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+    public LoginDto login(@AuthenticationPrincipal User user) {
+        return new LoginDto(user.getUsername(), user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
     }
 
 }

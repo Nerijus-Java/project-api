@@ -47,7 +47,7 @@ public class PostController {
         return postDto.parseObject(postService.getPost(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.BY_UUID)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.BY_UUID)
     @ApiOperation(value = "Create Post", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPost(@Valid @RequestBody Post post,
