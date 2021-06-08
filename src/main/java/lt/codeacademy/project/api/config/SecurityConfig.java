@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
-            "/webjars/**"
+            "/webjars/**",
+            "/h2/*"
     };
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
@@ -51,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers("/swagger-ui/*").permitAll()
+                .authorizeRequests().antMatchers("/swagger-ui/**", "/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
