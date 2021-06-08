@@ -1,6 +1,5 @@
 package lt.codeacademy.project.api.security;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -27,16 +28,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         String authorization = request.getHeader("Authorization");
 
-        if (StringUtils.isEmpty(authorization) && !authorization.startsWith("Bearer")){
+        if (isEmpty(authorization) || !authorization.startsWith("Bearer ") || request.getRequestURI().endsWith("/login")) {
             chain.doFilter(request, response);
             return;
         }
 
         String jwt = authorization.replace("Bearer ", "");
+
         Authentication authentication = jwtService.parseToken(jwt);
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         chain.doFilter(request, response);
 
     }

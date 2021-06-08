@@ -55,10 +55,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService))
         .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
     }
-
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
 }

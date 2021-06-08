@@ -1,10 +1,8 @@
 package lt.codeacademy.project.api.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lt.codeacademy.project.api.entity.Role;
 import lt.codeacademy.project.api.entity.User;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.Date;
 import java.util.List;
@@ -48,11 +45,17 @@ public class JwtService {
     }
 
     public Authentication parseToken(String jwt) {
+        Claims parsedJwtBody;
 
-        Claims parsedJwtBody = Jwts.parserBuilder()
-                .setSigningKey(tokenKey)
-                .build()
-                .parseClaimsJws(jwt).getBody();
+        try {
+            parsedJwtBody = Jwts.parserBuilder()
+                    .setSigningKey(tokenKey)
+                    .build()
+                    .parseClaimsJws(jwt)
+                    .getBody();
+        } catch(ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
+            return null;
+        }
 
         String username = parsedJwtBody.getSubject();
 

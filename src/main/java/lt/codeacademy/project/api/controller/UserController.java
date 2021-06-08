@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping(EndPoint.API_ROOT_USER_CONTROLLER)
 @Api
 public class UserController {

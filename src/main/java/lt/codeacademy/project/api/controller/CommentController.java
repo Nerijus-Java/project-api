@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping(EndPoint.API_ROOT_COMMENT_CONTROLLER)
 @Api
 public class CommentController {
