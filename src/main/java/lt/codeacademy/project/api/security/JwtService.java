@@ -59,7 +59,7 @@ public class JwtService {
 
         String username = parsedJwtBody.getSubject();
 
-        List<GrantedAuthority> roles = ((List<String>) parsedJwtBody.get("Roles")).stream()
+        List<GrantedAuthority> roles = ((List<String>) parsedJwtBody.get("roles")).stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 

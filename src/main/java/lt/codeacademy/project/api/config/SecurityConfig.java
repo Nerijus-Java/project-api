@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final JwtService jwtService;
+
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
     public SecurityConfig(ObjectMapper objectMapper, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
         this.objectMapper = objectMapper;
@@ -46,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
+                .authorizeRequests().antMatchers("/swagger-ui/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
@@ -54,5 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
         .addFilter(new JwtAuthenticationFilter(authenticationManager(),objectMapper, jwtService))
         .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 }

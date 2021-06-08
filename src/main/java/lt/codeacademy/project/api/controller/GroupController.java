@@ -3,6 +3,7 @@ package lt.codeacademy.project.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
+import lt.codeacademy.project.api.dto.GroupDto;
 import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.service.GroupService;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,9 @@ public class GroupController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get all groups", httpMethod = "GET")
-    public List<Group> GetGroups() {
-        return groupService.getAllGroups();
+    public List<GroupDto> GetGroups() {
+        GroupDto groupDto = new GroupDto();
+        return groupDto.parseList(groupService.getAllGroups());
     }
 
     @GetMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
