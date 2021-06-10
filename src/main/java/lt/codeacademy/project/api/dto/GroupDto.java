@@ -17,12 +17,18 @@ public class GroupDto {
     private String groupName;
     private String groupBio;
     private String username;
+    private int followerAmount;
 
     public List<GroupDto> parseList(List<Group> groups) {
         return groups.stream().map(e -> parseObject(e)).collect(Collectors.toList());
     }
 
     public GroupDto parseObject(Group group) {
-        return new GroupDto(group.getId().toString(), group.getGroupName(), group.getGroupBio(), group.getUser().getUsername());
+        return new GroupDto(
+                group.getId().toString(),
+                group.getGroupName(),
+                group.getGroupBio(),
+                group.getUser().getUsername(),
+                group.getFollowers().size());
     }
 }
