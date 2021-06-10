@@ -23,10 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
             "/swagger-ui.html",
+            "/swagger-ui/**",
             "/v2/api-docs",
             "/webjars/**",
-            "/h2/*"
+            "/h2/*",
+            "/project/api/public/**"
     };
+
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
@@ -50,14 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests().antMatchers("/swagger-ui/**", "/h2/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                .authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
+                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                    .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), objectMapper, jwtService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
     }

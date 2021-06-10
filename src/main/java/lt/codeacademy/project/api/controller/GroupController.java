@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(EndPoint.API_ROOT_GROUP_CONTROLLER)
+@RequestMapping(EndPoint.API_ROOT)
 @Api
 public class GroupController {
 
@@ -32,19 +32,19 @@ public class GroupController {
         this.groupDto = new GroupDto();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.PUBLIC + EndPoint.GROUP)
     @ApiOperation(value = "Get all groups", httpMethod = "GET")
     public List<GroupDto> GetGroups() {
         return groupDto.parseList(groupService.getAllGroups());
     }
 
-    @GetMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.GROUP + EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get Group by UUID", httpMethod = "GET")
     private GroupDto getGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
         return groupDto.parseObject(groupService.getGroup(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.GROUP)
     @ApiOperation(value = "Create Group", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public GroupDto createGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal String username) {
@@ -52,14 +52,14 @@ public class GroupController {
         return groupDto.parseObject(groupService.addGroup(group));
     }
 
-    @DeleteMapping(value = EndPoint.BY_UUID)
+    @DeleteMapping(value = EndPoint.GROUP + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Group", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
         groupService.removeGroup(uuid);
     }
 
-    @PutMapping
+    @PutMapping(EndPoint.GROUP)
     @ApiOperation(value = "Update Group", httpMethod = "PUT")
     public Group updateGroup(@Valid @RequestBody Group group) {
         return groupService.updateGroup(group);

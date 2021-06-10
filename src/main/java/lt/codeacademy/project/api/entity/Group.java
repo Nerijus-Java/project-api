@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public class Group {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "postIdGroup")
-    private Set<Post> posts;
+    private Set<Post> posts = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdGroup")

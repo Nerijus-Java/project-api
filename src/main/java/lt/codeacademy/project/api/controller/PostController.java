@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(EndPoint.API_ROOT_POST_CONTROLLER)
+@RequestMapping(EndPoint.API_ROOT)
 @Api
 public class PostController {
 
@@ -35,19 +35,19 @@ public class PostController {
         this.postDto = new PostDto();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.PUBLIC + EndPoint.POST)
     @ApiOperation(value = "Get all Posts", httpMethod = "GET")
     public List<PostDto> getPosts() {
         return postDto.parseList(postService.getAllPosts());
     }
 
-    @GetMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.POST + EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get Post by UUID", httpMethod = "GET")
     private PostDto getPost(@PathVariable(EndPoint.UUID) UUID uuid) {
         return postDto.parseObject(postService.getPost(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.BY_UUID)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.POST + EndPoint.BY_UUID)
     @ApiOperation(value = "Create Post", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPost(@Valid @RequestBody Post post,
@@ -59,14 +59,14 @@ public class PostController {
         postService.addPost(post);
     }
 
-    @DeleteMapping(value = EndPoint.BY_UUID)
+    @DeleteMapping(value = EndPoint.POST + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Post", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable(EndPoint.UUID) UUID uuid) {
         postService.removePost(uuid);
     }
 
-    @PutMapping
+    @PutMapping(EndPoint.POST)
     @ApiOperation(value = "Update Post", httpMethod = "PUT")
     public PostDto updatePost(@Valid @RequestBody Post post) {
 
@@ -75,5 +75,12 @@ public class PostController {
         post.setGroup(postService.getPost(post.getId()).getGroup());
 
         return postDto.parseObject(postService.updatePost(post));
+    }
+
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.POST + EndPoint.BY_UUID + EndPoint.GROUP
+            , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get Post by group UUID", httpMethod = "GET")
+    public List<PostDto> getPostsByGroupID(@PathVariable(EndPoint.UUID) UUID uuid) {
+        return postDto.parseList(postService.getPostByGroupID(uuid));
     }
 }

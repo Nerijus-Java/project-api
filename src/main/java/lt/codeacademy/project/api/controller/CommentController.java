@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(EndPoint.API_ROOT_COMMENT_CONTROLLER)
+@RequestMapping(EndPoint.API_ROOT)
 @Api
 public class CommentController {
 
@@ -35,35 +35,38 @@ public class CommentController {
         this.commentDto = new CommentDto();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.PUBLIC + EndPoint.COMMENT)
     @ApiOperation(value = "Get all Comments", httpMethod = "GET")
     public List<CommentDto> getComments() {
         return commentDto.parseList(commentsService.getAllComments());
     }
 
-    @GetMapping(value = EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.COMMENT + EndPoint.BY_UUID
+            , produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get Comment by UUID", httpMethod = "GET")
     public CommentDto getComment(@PathVariable(EndPoint.UUID) UUID uuid) {
         return commentDto.parseObject(commentsService.getComment(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.BY_POST_UUID)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.COMMENT + EndPoint.BY_POST_UUID)
     @ApiOperation(value = "Create comment", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createComment(@Valid @RequestBody Comment comment, @PathVariable(EndPoint.POST_UUID) UUID id, @AuthenticationPrincipal String username) {
+    public void createComment(@Valid @RequestBody Comment comment
+            , @PathVariable(EndPoint.POST_UUID) UUID id
+            , @AuthenticationPrincipal String username) {
         comment.setPost(postService.getPost(id));
         comment.setUser((User) userService.loadUserByUsername(username));
         commentsService.addComment(comment);
     }
 
-    @DeleteMapping(value = EndPoint.BY_UUID)
+    @DeleteMapping(value =  EndPoint.COMMENT + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Comment", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {
         commentsService.removeComment(id);
     }
 
-    @PutMapping
+    @PutMapping(EndPoint.COMMENT)
     @ApiOperation(value = "Update Comment", httpMethod = "PUT")
     public CommentDto updateComment(@Valid @RequestBody Comment comment) {
         comment.setUser(commentsService.getComment(comment.getId()).getUser());

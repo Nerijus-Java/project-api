@@ -1,5 +1,6 @@
 package lt.codeacademy.project.api.controller;
 
+import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.LoginDto;
 import lt.codeacademy.project.api.entity.Role;
 import lt.codeacademy.project.api.entity.User;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping(EndPoint.LOGIN)
 public class LoginController {
 
     @PostMapping
