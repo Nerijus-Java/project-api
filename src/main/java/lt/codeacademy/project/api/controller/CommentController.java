@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.CommentDto;
+import lt.codeacademy.project.api.dto.PostDto;
 import lt.codeacademy.project.api.entity.Comment;
 import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.service.CommentsService;
@@ -71,5 +72,12 @@ public class CommentController {
     public CommentDto updateComment(@Valid @RequestBody Comment comment) {
         comment.setUser(commentsService.getComment(comment.getId()).getUser());
         return commentDto.parseObject(commentsService.updateComment(comment));
+    }
+
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.COMMENT + EndPoint.BY_UUID + EndPoint.POST
+            , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get Comment by Post UUID", httpMethod = "GET")
+    public List<CommentDto> getPostsByGroupID(@PathVariable(EndPoint.UUID) UUID uuid) {
+        return commentDto.parseList(commentsService.getCommentByPostID(uuid));
     }
 }

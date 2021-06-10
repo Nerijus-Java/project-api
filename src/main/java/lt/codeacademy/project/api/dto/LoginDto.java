@@ -9,6 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class LoginDto {
 
+    private String id;
     private String username;
     private Set<String> roles;
 }
