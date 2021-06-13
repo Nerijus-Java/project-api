@@ -71,6 +71,7 @@ public class CommentController {
     @ApiOperation(value = "Update Comment", httpMethod = "PUT")
     public CommentDto updateComment(@Valid @RequestBody Comment comment) {
         comment.setUser(commentsService.getComment(comment.getId()).getUser());
+        comment.setPost(commentsService.getComment(comment.getId()).getPost());
         return commentDto.parseObject(commentsService.updateComment(comment));
     }
 

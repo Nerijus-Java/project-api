@@ -6,6 +6,7 @@ import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.GroupDto;
 import lt.codeacademy.project.api.entity.Group;
 import lt.codeacademy.project.api.entity.User;
+import lt.codeacademy.project.api.exception.GroupNotFoundException;
 import lt.codeacademy.project.api.service.GroupService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,17 @@ public class GroupController {
 
     @PutMapping(EndPoint.GROUP)
     @ApiOperation(value = "Update Group", httpMethod = "PUT")
-    public Group updateGroup(@Valid @RequestBody Group group) {
-        return groupService.updateGroup(group);
+    public GroupDto updateGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal String username) {
+        Group groupUpdating = groupService.getGroup(group.getId());
+        User loggedInUser = (User) userService.loadUserByUsername(username);
+        if (username.equals(groupUpdating.getUser().getUsername()) || loggedInUser.getRoles().contains("ROLE_ADMIN")){
+            group.setFollowers(groupUpdating.getFollowers());
+            group.setPosts(groupUpdating.getPosts());
+            group.setUser(groupUpdating.getUser());
+            return groupDto.parseObject(groupService.updateGroup(group));
+        } else {
+            throw new GroupNotFoundException("NO!");
+        }
+
     }
 }

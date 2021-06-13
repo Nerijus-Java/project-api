@@ -32,7 +32,7 @@ public class Group {
     @JoinColumn(name = "postIdGroup")
     private Set<Post> posts = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userIdGroup")
     private User user;
 
