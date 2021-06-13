@@ -17,7 +17,9 @@ public class GroupDto {
     private String groupName;
     private String groupBio;
     private String username;
+    private String userID;
     private int followerAmount;
+    private int postAmount;
 
     public List<GroupDto> parseList(List<Group> groups) {
         return groups.stream().map(e -> parseObject(e)).collect(Collectors.toList());
@@ -29,6 +31,8 @@ public class GroupDto {
                 group.getGroupName(),
                 group.getGroupBio(),
                 group.getUser().getUsername(),
-                group.getFollowers().size());
+                group.getUser().getId().toString(),
+                group.getFollowers().size(),
+                group.getPosts().size());
     }
 }

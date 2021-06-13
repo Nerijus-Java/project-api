@@ -16,12 +16,13 @@ public class PostDto {
     private String id;
     private String postTitle;
     private String postDescription;
+    private String username;
 
     public List<PostDto> parseList(List<Post> posts) {
         return posts.stream().map(e -> parseObject(e)).collect(Collectors.toList());
     }
 
     public PostDto parseObject(Post post) {
-        return new PostDto(post.getId().toString(), post.getPostTitle(), post.getPostDescription());
+        return new PostDto(post.getId().toString(), post.getPostTitle(), post.getPostDescription(), post.getUser().getUsername());
     }
 }

@@ -24,7 +24,7 @@ public class Post {
 
     private String postDescription;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "commentIdPost")
     private Set<Comment> comments;
 
@@ -32,7 +32,7 @@ public class Post {
     @JoinColumn(name = "postsIdUser")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "postIdGroup")
     private Group group;
 

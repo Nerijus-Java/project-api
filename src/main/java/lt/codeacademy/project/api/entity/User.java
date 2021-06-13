@@ -33,15 +33,15 @@ public class User implements UserDetails {
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "commentIdUser")
     private Set<Comment> comments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "postsIdUser")
     private Set<Post> posts;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "userIdGroup")
     private Set<Group> groups;
 
