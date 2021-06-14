@@ -62,12 +62,4 @@ public class UserController {
     public void deleteUser(@PathVariable(EndPoint.UUID) UUID uuid) {
         userService.removeUser(uuid);
     }
-
-    @PutMapping(EndPoint.USER)
-    @ApiOperation(value = "Update User", httpMethod = "PUT")
-    public UserDto updateUser(@Valid @RequestBody User user) {
-        user.setRoles(userService.getUser(user.getId()).getRoles());
-        return userDto.parseObject(userService.updateUser(user));
-    }
-
 }

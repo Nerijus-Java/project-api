@@ -20,11 +20,22 @@ public class UserDto {
     private String username;
     private Set<String> roles;
 
+    private String name;
+    private String surname;
+    private String bio;
+    private String password;
+
     public List<UserDto> parseList(List<User> users) {
         return users.stream().map(e -> parseObject(e)).collect(Collectors.toList());
     }
 
     public UserDto parseObject(User user) {
-        return new UserDto(user.getId().toString(), user.getUsername(), user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+        return new UserDto(user.getId().toString(),
+                user.getUsername(),
+                user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()),
+                user.getName(),
+                user.getSurname(),
+                user.getBio(),
+                user.getPassword());
     }
 }
