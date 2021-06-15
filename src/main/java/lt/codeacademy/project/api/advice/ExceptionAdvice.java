@@ -32,4 +32,12 @@ public class ExceptionAdvice {
     public ExceptionResponse handlingUserNotFoundException(UserNotFoundException e) {
         return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler(ProfilePictureNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ExceptionResponse handlingProfilePictureNotFoundException(ProfilePictureNotFound e) {
+        return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 }

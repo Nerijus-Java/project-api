@@ -12,6 +12,7 @@ public interface EndPoint {
     String COMMENT = "/comment";
     String LOGIN = "/login";
     String USER = "/user";
+    String PROFILE_PICTURE = "/picture";
     //controllers
 
 
