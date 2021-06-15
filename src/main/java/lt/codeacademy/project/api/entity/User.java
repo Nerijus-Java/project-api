@@ -41,7 +41,6 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank
-    @Size(min = 3, max = 50)
     private String password;
 
     @OneToOne(targetEntity = ProfilePicture.class)

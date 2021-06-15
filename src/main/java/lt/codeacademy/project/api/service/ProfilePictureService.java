@@ -30,6 +30,10 @@ public class ProfilePictureService {
         return profilePictureRepository.findById(uuid).orElseThrow(() -> new ProfilePictureNotFound("File dose not exist"));
     }
 
+    public void deleteProfilePic(UUID uuid){
+        profilePictureRepository.deleteById(profilePictureRepository.findByUserId(uuid).getId());
+    }
+
     public ProfilePicture getProfilePicByUserIdFromDataBase(UUID uuid) {
         return profilePictureRepository.findByUserId(uuid);
     }

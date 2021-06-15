@@ -6,6 +6,7 @@ import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.UserDto;
 import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.service.GroupService;
+import lt.codeacademy.project.api.service.ProfilePictureService;
 import lt.codeacademy.project.api.service.RoleService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -29,18 +30,19 @@ public class UserController {
     private final UserDto userDto;
     private final PasswordEncoder passwordEncoder;
     private final GroupService groupService;
+    private final ProfilePictureService profilePictureService;
 
-    public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, GroupService groupService) {
+    public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, GroupService groupService, ProfilePictureService profilePictureService) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.groupService = groupService;
+        this.profilePictureService = profilePictureService;
         this.userDto = new UserDto();
     }
 
     @GetMapping(value = EndPoint.PUBLIC + EndPoint.USER, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get all Users", httpMethod = "GET")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserDto> getUsers() {
         return userDto.parseList(userService.getAllUsers());
     }
@@ -64,9 +66,12 @@ public class UserController {
     @DeleteMapping(value = EndPoint.USER + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove User", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteUser(@PathVariable(EndPoint.UUID) UUID uuid) {
         groupService.getGroupsUserFollows(uuid).forEach(e -> groupService.unFollowUser(userService.getUser(uuid), e.getId()));
+
+        if (profilePictureService.getProfilePicByUserIdFromDataBase(uuid) != null){
+            profilePictureService.deleteProfilePic(uuid);
+        }
         userService.removeUser(uuid);
     }
 }
