@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiResponses;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.entity.ProfilePicture;
 import lt.codeacademy.project.api.service.ProfilePictureService;
-import lt.codeacademy.project.api.service.UserService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

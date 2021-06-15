@@ -35,8 +35,6 @@ public class ProfilePictureService {
     }
 
     public void saveProfilePicAsBlob(MultipartFile multipartFile, String username) {
-        validateFile(multipartFile);
-
         try {
             ProfilePicture profilePicture = new ProfilePicture();
             profilePicture.setFileName(multipartFile.getOriginalFilename());
@@ -50,12 +48,4 @@ public class ProfilePictureService {
         }
     }
 
-    private void validateFile(MultipartFile file) {
-        if (file.getSize() > MAX_SIZE) {
-            throw new RuntimeException();
-        }
-        if (!types.contains(file.getContentType())) {
-            throw new RuntimeException();
-        }
-    }
 }
