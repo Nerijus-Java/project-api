@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.CommentDto;
-import lt.codeacademy.project.api.dto.PostDto;
 import lt.codeacademy.project.api.entity.Comment;
 import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.service.CommentsService;

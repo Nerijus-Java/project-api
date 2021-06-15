@@ -7,6 +7,7 @@ import lt.codeacademy.project.api.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class GroupService {
     public void unFollowUser(User user, UUID groupId){
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFoundException("Group does not exist"));
         group.setFollowers(group.getFollowers().stream().filter(e -> !e.getId().equals(user.getId())).collect(Collectors.toSet()));
-
+        groupRepository.save(group);
     }
 
     public void removeGroup(UUID uuid) {
