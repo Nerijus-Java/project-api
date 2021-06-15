@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +23,11 @@ public class Group {
     @Type(type = "uuid-char")
     private UUID id;
 
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String groupName;
 
+    @Size(min = 3, max = 200)
     private String groupBio;
 
     @ManyToMany
