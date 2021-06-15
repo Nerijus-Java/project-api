@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -46,7 +47,7 @@ public class User implements UserDetails {
 
     @OneToMany
     @JoinColumn(name = "userIdGroup")
-    private Set<Group> groups;
+    private List<Group> groups;
 
     @ManyToMany
     private Set<Role> roles;

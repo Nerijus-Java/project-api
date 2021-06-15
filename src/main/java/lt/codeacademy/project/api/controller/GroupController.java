@@ -39,6 +39,18 @@ public class GroupController {
         return groupDto.parseList(groupService.getAllGroups());
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.GROUP + EndPoint.BY_UUID + EndPoint.USER)
+    @ApiOperation(value = "Get all groups by user id", httpMethod = "GET")
+    public List<GroupDto> GetGroupsByUserId(@PathVariable(EndPoint.UUID) UUID uuid) {
+        return groupDto.parseList(userService.getUser(uuid).getGroups());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.GROUP + EndPoint.FOLLOWER + EndPoint.BY_UUID + EndPoint.USER)
+    @ApiOperation(value = "Get all groups by user id Following", httpMethod = "GET")
+    public List<GroupDto> GetGroupsFollowByUserId(@PathVariable(EndPoint.UUID) UUID uuid) {
+        return groupDto.parseList(groupService.getGroupsUserFollows(uuid));
+    }
+
     @GetMapping(value = EndPoint.PUBLIC + EndPoint.GROUP + EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get Group by UUID", httpMethod = "GET")
     private GroupDto getGroup(@PathVariable(EndPoint.UUID) UUID uuid) {
@@ -73,6 +85,5 @@ public class GroupController {
         } else {
             throw new GroupNotFoundException("NO!");
         }
-
     }
 }

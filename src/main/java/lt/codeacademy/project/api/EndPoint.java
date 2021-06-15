@@ -13,9 +13,11 @@ public interface EndPoint {
     String LOGIN = "/login";
     String USER = "/user";
     String PROFILE_PICTURE = "/picture";
+    String FOLLOWER = "/follow";
     //controllers
 
 
     String BY_UUID = "/{" + UUID + "}";
     String BY_POST_UUID = "/{" + POST_UUID + "}";
+
 }

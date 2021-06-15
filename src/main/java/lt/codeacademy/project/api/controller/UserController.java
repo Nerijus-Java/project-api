@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.dto.UserDto;
 import lt.codeacademy.project.api.entity.User;
+import lt.codeacademy.project.api.service.GroupService;
 import lt.codeacademy.project.api.service.RoleService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,13 @@ public class UserController {
     private final RoleService roleService;
     private final UserDto userDto;
     private final PasswordEncoder passwordEncoder;
+    private final GroupService groupService;
 
-    public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, GroupService groupService) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.groupService = groupService;
         this.userDto = new UserDto();
     }
 
@@ -60,6 +63,7 @@ public class UserController {
     @ApiOperation(value = "Remove User", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable(EndPoint.UUID) UUID uuid) {
+        groupService.getGroupsUserFollows(uuid).forEach(e -> groupService.unFollowUser(userService.getUser(uuid),e.getId()));
         userService.removeUser(uuid);
     }
 }
