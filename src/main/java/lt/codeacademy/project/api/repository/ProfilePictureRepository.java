@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface ProfilePictureRepository extends JpaRepository<ProfilePicture, UUID> {
 
-    ProfilePicture findFirstByFileName(String fileName);
+    ProfilePicture findByUserId(UUID uuid);
 }

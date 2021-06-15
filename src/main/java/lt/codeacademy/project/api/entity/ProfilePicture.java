@@ -28,4 +28,7 @@ public class ProfilePicture {
 
     @Lob
     private byte[] bytes;
+
+    @OneToOne(targetEntity=User.class)
+    private User user;
 }

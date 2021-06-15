@@ -7,12 +7,14 @@ import io.swagger.annotations.ApiResponses;
 import lt.codeacademy.project.api.EndPoint;
 import lt.codeacademy.project.api.entity.ProfilePicture;
 import lt.codeacademy.project.api.service.ProfilePictureService;
+import lt.codeacademy.project.api.service.UserService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,25 +34,33 @@ public class ProfilePictureController {
     @ApiOperation(value = "Save Picture as BLOB",  httpMethod = "POST")
     @PostMapping(EndPoint.PROFILE_PICTURE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProfilePictureAsBlob(@RequestParam MultipartFile multipartFile) {
-        profilePictureService.saveProfilePicAsBlob(multipartFile);
+    public void saveProfilePictureAsBlob(@RequestParam MultipartFile multipartFile, @AuthenticationPrincipal String username ) {
+        profilePictureService.saveProfilePicAsBlob(multipartFile, username);
     }
 
     @ApiOperation(value = "Get Picture by id as Blob",  httpMethod = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200,message = "Got image"),
-            @ApiResponse(code = 403,message = "Could not get image"),
-            @ApiResponse(code = 401,message = "Login to get image")
-    })
     @GetMapping( EndPoint.PUBLIC + EndPoint.PROFILE_PICTURE + EndPoint.BY_UUID)
     public ResponseEntity<Resource> getFileByUUIDAsBlob(@PathVariable(EndPoint.UUID) UUID uuid) {
 
-        ProfilePicture file = profilePictureService.getProfilePicByIdFromDataBaseSystem(uuid);
-        Resource resource = new ByteArrayResource(file.getBytes());
+        ProfilePicture profilePicture = profilePictureService.getProfilePicByIdFromDataBaseSystem(uuid);
+        Resource resource = new ByteArrayResource(profilePicture.getBytes());
 
         return ResponseEntity.ok()
-                .headers(getHttpHeader(file.getFileName()))
-                .contentType(MediaType.valueOf(file.getMediaType()))
+                .headers(getHttpHeader(profilePicture.getFileName()))
+                .contentType(MediaType.valueOf(profilePicture.getMediaType()))
+                .body(resource);
+    }
+
+    @ApiOperation(value = "Get Picture by UserId as Blob",  httpMethod = "GET")
+    @GetMapping( EndPoint.PUBLIC + EndPoint.PROFILE_PICTURE + EndPoint.BY_UUID + EndPoint.USER)
+    public ResponseEntity<Resource> getFileByUserUUIDAsBlob(@PathVariable(EndPoint.UUID) UUID uuid){
+
+        ProfilePicture profilePicture = profilePictureService.getProfilePicByUserIdFromDataBase(uuid);
+        Resource resource = new ByteArrayResource(profilePicture.getBytes());
+
+        return ResponseEntity.ok()
+                .headers(getHttpHeader(profilePicture.getFileName()))
+                .contentType(MediaType.valueOf(profilePicture.getMediaType()))
                 .body(resource);
     }
 

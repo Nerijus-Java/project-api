@@ -33,6 +33,9 @@ public class User implements UserDetails {
 
     private String password;
 
+    @OneToOne(targetEntity=ProfilePicture.class)
+    private ProfilePicture profilePicture;
+
     @OneToMany
     @JoinColumn(name = "commentIdUser")
     private Set<Comment> comments;

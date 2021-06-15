@@ -1,6 +1,7 @@
 package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.ProfilePicture;
+import lt.codeacademy.project.api.entity.User;
 import lt.codeacademy.project.api.exception.ProfilePictureNotFound;
 import lt.codeacademy.project.api.repository.ProfilePictureRepository;
 import org.springframework.http.MediaType;
@@ -17,8 +18,10 @@ public class ProfilePictureService {
     private final Set<String> types;
 
     private final ProfilePictureRepository profilePictureRepository;
+    private final UserService userService;
 
-    public ProfilePictureService(ProfilePictureRepository profilePictureRepository) {
+    public ProfilePictureService(ProfilePictureRepository profilePictureRepository, UserService userService) {
+        this.userService = userService;
         this.types = Set.of(MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE);
         this.profilePictureRepository = profilePictureRepository;
     }
@@ -27,7 +30,11 @@ public class ProfilePictureService {
         return profilePictureRepository.findById(uuid).orElseThrow(() -> new ProfilePictureNotFound("File dose not exist"));
     }
 
-    public void saveProfilePicAsBlob(MultipartFile multipartFile) {
+    public ProfilePicture getProfilePicByUserIdFromDataBase(UUID uuid){
+        return profilePictureRepository.findByUserId(uuid);
+    }
+
+    public void saveProfilePicAsBlob(MultipartFile multipartFile, String username) {
         validateFile(multipartFile);
 
         try {
@@ -36,7 +43,7 @@ public class ProfilePictureService {
             profilePicture.setBytes(multipartFile.getBytes());
             profilePicture.setSize(multipartFile.getSize());
             profilePicture.setMediaType(multipartFile.getContentType());
-
+            profilePicture.setUser((User) userService.loadUserByUsername(username));
             profilePictureRepository.save(profilePicture);
         }catch (Exception e){
             throw new RuntimeException();
