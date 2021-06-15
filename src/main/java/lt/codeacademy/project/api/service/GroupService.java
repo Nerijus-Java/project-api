@@ -7,7 +7,6 @@ import lt.codeacademy.project.api.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -38,12 +37,12 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
-    public List<Group> getGroupsUserFollows(UUID uuid){
+    public List<Group> getGroupsUserFollows(UUID uuid) {
         return groupRepository.findAll().stream()
                 .filter(e -> e.getFollowers().contains(userService.getUser(uuid))).collect(Collectors.toList());
     }
 
-    public void unFollowUser(User user, UUID groupId){
+    public void unFollowUser(User user, UUID groupId) {
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFoundException("Group does not exist"));
         group.setFollowers(group.getFollowers().stream().filter(e -> !e.getId().equals(user.getId())).collect(Collectors.toSet()));
         groupRepository.save(group);

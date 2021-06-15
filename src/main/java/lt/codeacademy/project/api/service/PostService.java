@@ -37,7 +37,7 @@ public class PostService {
         postRepository.delete(postRepository.getOne(uuid));
     }
 
-    public List<Post> getPostByGroupID(UUID uuid){
+    public List<Post> getPostByGroupID(UUID uuid) {
         return postRepository.findByPostIdGroup(uuid);
     }
 }

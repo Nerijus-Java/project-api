@@ -28,7 +28,7 @@ public class FollowController {
 
     @PostMapping(value = EndPoint.FOLLOWER + EndPoint.BY_UUID)
     @ApiOperation(value = "Follow Group", httpMethod = "POST")
-    public void followGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username){
+    public void followGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username) {
         Group group = groupService.getGroup(uuid);
         group.getFollowers().add((User) userService.loadUserByUsername(username));
         groupService.updateGroup(group);
@@ -36,13 +36,13 @@ public class FollowController {
 
     @DeleteMapping(value = EndPoint.FOLLOWER + EndPoint.BY_UUID)
     @ApiOperation(value = "unFollow Group", httpMethod = "DELETE")
-    public void unFollowGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username){
+    public void unFollowGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username) {
         groupService.unFollowUser((User) userService.loadUserByUsername(username), uuid);
     }
 
     @GetMapping(value = EndPoint.FOLLOWER + EndPoint.BY_UUID)
     @ApiOperation(value = "unFollow Group", httpMethod = "GET")
-    public boolean isFollowGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username){
+    public boolean isFollowGroup(@PathVariable(EndPoint.UUID) UUID uuid, @AuthenticationPrincipal String username) {
         return groupService.getGroup(uuid).getFollowers().contains((User) userService.loadUserByUsername(username));
     }
 

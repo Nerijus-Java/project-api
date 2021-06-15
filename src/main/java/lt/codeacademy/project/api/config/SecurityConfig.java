@@ -53,14 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and()
+                .anyRequest().authenticated()
+                .and()
                 .exceptionHandling()
-                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                    .and()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), objectMapper, jwtService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService));
     }

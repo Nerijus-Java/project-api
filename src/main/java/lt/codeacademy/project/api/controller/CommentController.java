@@ -35,7 +35,7 @@ public class CommentController {
         this.commentDto = new CommentDto();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.PUBLIC + EndPoint.COMMENT)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.PUBLIC + EndPoint.COMMENT)
     @ApiOperation(value = "Get all Comments", httpMethod = "GET")
     public List<CommentDto> getComments() {
         return commentDto.parseList(commentsService.getAllComments());
@@ -59,7 +59,7 @@ public class CommentController {
         commentsService.addComment(comment);
     }
 
-    @DeleteMapping(value =  EndPoint.COMMENT + EndPoint.BY_UUID)
+    @DeleteMapping(value = EndPoint.COMMENT + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove Comment", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable(EndPoint.UUID) UUID id) {

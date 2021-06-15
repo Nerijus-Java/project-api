@@ -31,7 +31,7 @@ public class JwtService {
     public String createToken(User principal) {
 
         return Jwts.builder()
-                .setHeaderParam("typ","JWT")
+                .setHeaderParam("typ", "JWT")
                 .setIssuer("project-api")
                 .setAudience("project-ui")
                 .setSubject(principal.getUsername())
@@ -53,7 +53,7 @@ public class JwtService {
                     .build()
                     .parseClaimsJws(jwt)
                     .getBody();
-        } catch(ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
             return null;
         }
 
@@ -63,7 +63,7 @@ public class JwtService {
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 
-        return new UsernamePasswordAuthenticationToken(username, null , roles);
+        return new UsernamePasswordAuthenticationToken(username, null, roles);
 
     }
 }

@@ -17,7 +17,7 @@ public class LoginController {
 
     @PostMapping
     public LoginDto login(@AuthenticationPrincipal User user) {
-        return new LoginDto(user.getId().toString(),user.getUsername(),
+        return new LoginDto(user.getId().toString(), user.getUsername(),
                 user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
     }
 

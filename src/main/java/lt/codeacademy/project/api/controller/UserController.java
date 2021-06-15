@@ -10,6 +10,7 @@ import lt.codeacademy.project.api.service.RoleService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,19 +38,20 @@ public class UserController {
         this.userDto = new UserDto();
     }
 
-    @GetMapping(value = EndPoint.PUBLIC + EndPoint.USER,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.USER, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get all Users", httpMethod = "GET")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserDto> getUsers() {
         return userDto.parseList(userService.getAllUsers());
     }
 
-    @GetMapping(value = EndPoint.PUBLIC + EndPoint.USER+ EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EndPoint.PUBLIC + EndPoint.USER + EndPoint.BY_UUID, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get User by UUID", httpMethod = "GET")
     private UserDto getUser(@PathVariable(EndPoint.UUID) UUID uuid) {
         return userDto.parseObject(userService.getUser(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,value = EndPoint.PUBLIC + EndPoint.USER)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.PUBLIC + EndPoint.USER)
     @ApiOperation(value = "Create User", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@Valid @RequestBody User user) {
@@ -59,11 +61,12 @@ public class UserController {
         userService.addUser(user);
     }
 
-    @DeleteMapping(value =EndPoint.USER + EndPoint.BY_UUID)
+    @DeleteMapping(value = EndPoint.USER + EndPoint.BY_UUID)
     @ApiOperation(value = "Remove User", httpMethod = "DELETE")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteUser(@PathVariable(EndPoint.UUID) UUID uuid) {
-        groupService.getGroupsUserFollows(uuid).forEach(e -> groupService.unFollowUser(userService.getUser(uuid),e.getId()));
+        groupService.getGroupsUserFollows(uuid).forEach(e -> groupService.unFollowUser(userService.getUser(uuid), e.getId()));
         userService.removeUser(uuid);
     }
 }

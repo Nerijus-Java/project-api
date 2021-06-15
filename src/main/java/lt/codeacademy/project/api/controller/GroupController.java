@@ -57,7 +57,7 @@ public class GroupController {
         return groupDto.parseObject(groupService.getGroup(uuid));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE , value = EndPoint.GROUP)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = EndPoint.GROUP)
     @ApiOperation(value = "Create Group", httpMethod = "POST")
     @ResponseStatus(HttpStatus.CREATED)
     public GroupDto createGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal String username) {
@@ -77,7 +77,7 @@ public class GroupController {
     public GroupDto updateGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal String username) {
         Group groupUpdating = groupService.getGroup(group.getId());
         User loggedInUser = (User) userService.loadUserByUsername(username);
-        if (username.equals(groupUpdating.getUser().getUsername()) || loggedInUser.getRoles().contains("ROLE_ADMIN")){
+        if (username.equals(groupUpdating.getUser().getUsername()) || loggedInUser.getRoles().contains("ROLE_ADMIN")) {
             group.setFollowers(groupUpdating.getFollowers());
             group.setPosts(groupUpdating.getPosts());
             group.setUser(groupUpdating.getUser());

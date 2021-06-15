@@ -37,7 +37,7 @@ public class CommentsService {
         commentsRepository.deleteById(uuid);
     }
 
-    public List<Comment> getCommentByPostID(UUID uuid){
+    public List<Comment> getCommentByPostID(UUID uuid) {
         return commentsRepository.findByCommentIdPost(uuid);
     }
 }

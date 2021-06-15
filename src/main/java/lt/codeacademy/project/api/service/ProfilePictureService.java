@@ -30,7 +30,7 @@ public class ProfilePictureService {
         return profilePictureRepository.findById(uuid).orElseThrow(() -> new ProfilePictureNotFound("File dose not exist"));
     }
 
-    public ProfilePicture getProfilePicByUserIdFromDataBase(UUID uuid){
+    public ProfilePicture getProfilePicByUserIdFromDataBase(UUID uuid) {
         return profilePictureRepository.findByUserId(uuid);
     }
 
@@ -40,8 +40,8 @@ public class ProfilePictureService {
 
         validateFile(multipartFile);
 
-        if (profilePictureRepository.findByUserId(user.getId()) != null){
-           profilePictureRepository.deleteById(profilePictureRepository.findByUserId(user.getId()).getId());
+        if (profilePictureRepository.findByUserId(user.getId()) != null) {
+            profilePictureRepository.deleteById(profilePictureRepository.findByUserId(user.getId()).getId());
         }
 
         try {
@@ -52,7 +52,7 @@ public class ProfilePictureService {
             profilePicture.setMediaType(multipartFile.getContentType());
             profilePicture.setUser((User) userService.loadUserByUsername(username));
             profilePictureRepository.save(profilePicture);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException();
         }
 
