@@ -2,6 +2,7 @@ package lt.codeacademy.project.api.service;
 
 import lt.codeacademy.project.api.entity.ProfilePicture;
 import lt.codeacademy.project.api.entity.User;
+import lt.codeacademy.project.api.exception.FileException;
 import lt.codeacademy.project.api.exception.ProfilePictureNotFound;
 import lt.codeacademy.project.api.repository.ProfilePictureRepository;
 import org.springframework.http.MediaType;
@@ -64,10 +65,10 @@ public class ProfilePictureService {
 
     private void validateFile(MultipartFile file) {
         if (file.getSize() > MAX_SIZE) {
-            throw new RuntimeException();
+            throw new FileException("File is to big");
         }
         if (!types.contains(file.getContentType())) {
-            throw new RuntimeException();
+            throw new FileException("File type not supported");
         }
     }
 

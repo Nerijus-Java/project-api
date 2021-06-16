@@ -40,4 +40,10 @@ public class ExceptionAdvice {
         return new ExceptionResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FileException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handlingFileException(FileException exception){
+        return new ExceptionResponse(exception.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
 }

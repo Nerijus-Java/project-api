@@ -11,7 +11,6 @@ import lt.codeacademy.project.api.service.RoleService;
 import lt.codeacademy.project.api.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,7 +68,7 @@ public class UserController {
     public void deleteUser(@PathVariable(EndPoint.UUID) UUID uuid) {
         groupService.getGroupsUserFollows(uuid).forEach(e -> groupService.unFollowUser(userService.getUser(uuid), e.getId()));
 
-        if (profilePictureService.getProfilePicByUserIdFromDataBase(uuid) != null){
+        if (profilePictureService.getProfilePicByUserIdFromDataBase(uuid) != null) {
             profilePictureService.deleteProfilePic(uuid);
         }
         userService.removeUser(uuid);
