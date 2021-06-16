@@ -23,7 +23,6 @@ public class UserDto {
     private String name;
     private String surname;
     private String bio;
-    private String password;
 
     public List<UserDto> parseList(List<User> users) {
         return users.stream().map(e -> parseObject(e)).collect(Collectors.toList());
@@ -35,7 +34,6 @@ public class UserDto {
                 user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()),
                 user.getName(),
                 user.getSurname(),
-                user.getBio(),
-                user.getPassword());
+                user.getBio());
     }
 }
