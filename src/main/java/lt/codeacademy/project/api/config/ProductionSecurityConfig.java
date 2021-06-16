@@ -17,16 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
-@Profile("development")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Profile("production")
+public class ProductionSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-            "/swagger-resources/**",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
-            "/v2/api-docs",
-            "/webjars/**",
-            "/h2/**",
             "/project/api/public/**"
     };
 
@@ -35,12 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
     private final JwtService jwtService;
 
-    public SecurityConfig(ObjectMapper objectMapper, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
+    public ProductionSecurityConfig(ObjectMapper objectMapper, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
         this.objectMapper = objectMapper;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.jwtService = jwtService;
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

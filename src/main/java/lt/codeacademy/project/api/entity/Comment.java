@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Getter
@@ -19,6 +20,7 @@ public class Comment {
     @Type(type = "uuid-char")
     private UUID id;
 
+    @Size(min = 3, max = 200)
     private String description;
 
     @ManyToOne

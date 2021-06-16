@@ -27,6 +27,7 @@ public class Group {
     @Size(min = 3, max = 50)
     private String groupName;
 
+    @NotBlank
     @Size(min = 3, max = 200)
     private String groupBio;
 
